@@ -21,7 +21,8 @@ mkdir -p reports/alignment
 
 
 cp $R1 $REFDIR/
-REFERENCE=$REFDIR/$R1
+REF=`echo $R1 | sed 's/\// /g' | awk '{print $NF}'`
+REFERENCE=$REFDIR/$REF
 ./buildref.sh $REFERENCE > reports/buildreference_report.txt
 wait
 
