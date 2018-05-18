@@ -2,7 +2,7 @@ This is the README file.
 
 To use pipeline:
 
-$ git clone https://github.com/ozankiratli/DNA-Alignment-Pipeline
+$ git clone https://github.com/ozankiratli/DNA-Alignment-Pipeline.git
 
 Make a subdirectory named data and put raw fastq files there:
 
