@@ -1,11 +1,37 @@
 #!/bin/bash
 
-R1=$1
-
 WD=`pwd`
+
+source PARAMETERS
+R1=$REFERENCEFILE
+
+Test1=`ls $R1`
+if [ ! -f $Test1 ] ; then
+	echo "Reference file not found! Check PARAMETERS file"
+	exit 1
+else
+	echo "Reference file is: $R1"
+fi
+
+if [ -d $DATASOURCE  ] ; then
+	DATAIN=$DATASOURCE
+	echo "The data source  is set to: $DATAIN"
+else
+	echo "Data directory does not exist! Check PARAMETERS file"
+	exit 1
+fi
+
 DATADIR=$WD/Data
+if [[ $DATAIN -ef Data ]] ; then
+	echo "No need to copy. Data is already in: $DATADIR"
+else
+	mkdir -p $DATADIR
+	echo "Copying the files to $DATADIR"
+	sudo cp $DATASOURCE/* $DATADIR/
+	echo "Files are copied"
+fi
+
 TRIMDIR=$WD/trimmed
-ANALYSISDIR=$WD
 REFDIR=$WD/Reference
 
 mkdir -p Reference
@@ -18,7 +44,6 @@ mkdir -p sorted
 mkdir -p reports/fastqc
 mkdir -p reports/trim
 mkdir -p reports/alignment
-
 
 cp $R1 $REFDIR/
 REF=`echo $R1 | sed 's/\// /g' | awk '{print $NF}'`
@@ -36,7 +61,6 @@ for f1 in $LIST1 ; do
 	wait
 done
 wait
-
 
 LIST2=`ls $TRIMDIR/*_R1_*`
 for f2 in $LIST2 ; do

@@ -1,6 +1,8 @@
 
 #!/bin/bash
 
+source PARAMETERS
+
 R1=$1
 I1=$2
 I2=$3
@@ -14,7 +16,7 @@ BAMDIR=$WD/BAM
 SORTEDDIR=$WD/sorted
 REPORTSDIR=$WD/reports/alignment
 
-THREADS=4
+THREADS=$BWATHREADS
 BWA_T=30
 
 REFERENCE=$R1
@@ -30,9 +32,7 @@ REPORT=$REPORTSDIR/$OUTPUT"_alignment_report.txt"
 ID=`echo $I1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
 
 
-
-
-bwa mem -t $THREADS -T $BWA_T $REFERENCE $INPUT1 $INPUT2 > $SAM
+bwa mem -t $BWAOPTIONS $REFERENCE $INPUT1 $INPUT2 > $SAM
 samtools view -bS $SAM -o $BAM
 samtools sort $BAM -o $SORTED
 samtools index $SORTED

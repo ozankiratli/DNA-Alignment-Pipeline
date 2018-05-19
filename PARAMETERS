@@ -1,0 +1,12 @@
+
+REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/Dmel_mtDNA_ref_v6.fasta
+
+DATASOURCE=Data
+
+TRIMQUALITY=25
+TRIMGALOREOPTIONS="--fastqc --nextera --paired -q $TRIMQUALITY --retain_unpaired"
+
+BWATHREADS=4
+BWAMINSCOREOUTPUT=30
+BWAOPTIONS="-t $BWATHREADS -T $BWAMINSCOREOUTPUT"
+
