@@ -1,0 +1,21 @@
+###THE LIST OF PROGRAMS NEEDED####
+# 1. samtools 
+# 2. bamtools
+# 3. picard.jar
+# 4. bcftools
+# 5. seqtk
+# 6. trim_galore
+# 7. bwa 
+# 8. cutadapt
+# 9. fastqc
+########################
+
+PICARD=/usr/local/bin/picard.jar
+SAMTOOLS=/usr/bin/samtools
+BAMTOOLS=/usr/bin/bamtools
+VCFUTILS=/usr/bin/vcfutils.pl
+BCFTOOLS=/usr/bin/bcftools
+SEQTK=/usr/bin/seqtk
+BWA=/usr/bin/bwa
+TRIMGALORE=/usr/local/bin/trim_galore
+JAVA=/usr/bin/java

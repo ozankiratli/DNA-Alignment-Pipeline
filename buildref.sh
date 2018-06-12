@@ -1,15 +1,34 @@
 #!/bin/bash
 
+source PARAMETERS
+source PROGRAMPATHS
+
 R1=$1
 
 WD=`pwd`
-PICARD=/usr/local/bin/picard.jar
 
 REFDIR=$WD/Reference
 REFERENCE=$R1
 REF=`echo $R1 | sed 's/\./ /g'  | awk '{print $1}' | sed 's/\// /g' | awk '{print $NF}'`
 REFDICT=$REFDIR/$REF.dict
 
-bwa index -a bwtsw $REFERENCE
-samtools faidx $REFERENCE
-java -jar $PICARD CreateSequenceDictionary REFERENCE=$REFERENCE OUTPUT=$REFDICT
+echo "Creating BWA index..."
+sleep 1
+$BWA index -a bwtsw $REFERENCE
+echo " "
+echo "Done!"
+sleep 1
+echo " "
+echo "Creating samtools index..."
+sleep 1
+$SAMTOOLS faidx $REFERENCE
+echo " "
+echo "Done!"
+sleep 1
+echo " "
+echo "Creating picard reference dictionary..."
+sleep 1
+$JAVA -jar $PICARD CreateSequenceDictionary REFERENCE=$REFERENCE OUTPUT=$REFDICT
+echo " "
+echo "Done!"
+sleep 1

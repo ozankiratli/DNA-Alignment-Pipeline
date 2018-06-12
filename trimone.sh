@@ -1,13 +1,12 @@
 #!/bin/bash
 
 source PARAMETERS
+source PROGRAMPATHS
 
 I1=$1
 I2=$2
 
 WD=`pwd`
-TRIMGALORE=trim_galore
-
 DATADIR=$WD/Data
 
 INPUT1=$I1
@@ -20,6 +19,5 @@ wait
 sudo mv *.zip reports/fastqc
 sudo mv *.html reports/fastqc
 sudo mv *.txt reports/trim
-
 sudo mv *_unpaired_* unpaired/
 sudo mv *val* trimmed/
