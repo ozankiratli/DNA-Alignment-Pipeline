@@ -121,26 +121,40 @@ echo " "
 echo " "
 sleep 1
 
-echo "Starting to build consensus sequences and preprocess for variant calling..."
+echo "Starting to preprocess for variant calling and building concencus..."
 echo " "
 sleep 1
 LIST3=`ls $SORTEDDIR/*.bam`
 for f3 in $LIST3 ; do
 	INPUT=$f3
-	./consensusone.sh $REFERENCE $INPUT
 	./vcprep.sh $INPUT
 	wait
 	echo " "
 done
 wait
 echo " "
-echo "End of generating consensus sequences!"
+echo "End of Preprocessing!"
+echo " "
+sleep 1
+
+echo "Starting to preprocess for variant calling and building concencus..."
+echo " "
+sleep 1
+LIST4=`ls $VCREADYDIR/*.bam`
+for f4 in $LIST4 ; do
+	INPUT=$f4
+	./consensusone.sh $REFERENCE $INPUT
+	wait
+	echo " "
+done
+wait
+echo " "
+echo "End of Building Consensus!"
 echo " "
 sleep 1
 
 echo "Starting VariantCalling..."
 echo " "
-LIST4=`ls $VCREADYDIR/*.bam`
 sleep 1
 ./vcfcaller.sh $REFERENCE $LIST4
 echo " "
