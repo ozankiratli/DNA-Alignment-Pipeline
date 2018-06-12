@@ -11,7 +11,7 @@ VCFFILE=$VCFDIR/output.vcf
 
 echo "Creating VCF file..."
 echo " "
-$SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call -Ov -o $VCFFILE --threads 2 -v -m
+$SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call $VARCALLOPTIONS -o $VCFFILE
 echo "Done!"
 sleep 1
 echo " "
