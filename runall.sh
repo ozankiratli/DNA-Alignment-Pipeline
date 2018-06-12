@@ -136,7 +136,7 @@ echo "End of Preprocessing!"
 echo " "
 sleep 1
 
-echo "Starting to preprocess for variant calling and building concencus..."
+echo "Starting to build consensus files..."
 echo " "
 sleep 1
 LIST4=`ls $VCREADYDIR/*.bam`
@@ -148,7 +148,7 @@ for f4 in $LIST4 ; do
 done
 wait
 echo " "
-echo "End of Building Consensus!"
+echo "End of Building Consensus files!"
 echo " "
 sleep 1
 
@@ -158,3 +158,5 @@ sleep 1
 ./vcfcaller.sh $REFERENCE $LIST4
 echo " "
 echo "Done!"
+echo " "
+echo "End of script!"
