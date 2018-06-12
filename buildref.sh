@@ -3,11 +3,9 @@
 source PARAMETERS
 source PROGRAMPATHS
 
-R1=$1
-
 REFDIR=$WD/Reference
-REFERENCE=$R1
-REF=`echo $R1 | sed 's/\./ /g'  | awk '{print $1}' | sed 's/\// /g' | awk '{print $NF}'`
+REFERENCE=$1
+REF=`echo $1 | sed 's/\./ /g'  | awk '{print $1}' | sed 's/\// /g' | awk '{print $NF}'`
 REFDICT=$REFDIR/$REF.dict
 
 echo "Creating BWA index..."
