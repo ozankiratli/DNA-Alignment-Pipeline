@@ -75,8 +75,7 @@ echo "Building Reference..."
 cp $R1 $REFDIR/
 REF=`echo $R1 | sed 's/\// /g' | awk '{print $NF}'`
 REFERENCE=$REFDIR/$REF
-echo " "
-echo "Running: ./buildref.sh $REFERENCE > reports/buildreference_report.txt"
+echo " "echo "Running: ./buildref.sh $REFERENCE > reports/buildreference_report.txt"
 ./buildref.sh $REFERENCE
 wait
 echo " "
@@ -121,7 +120,7 @@ echo " "
 echo " "
 sleep 1
 
-echo "Starting to preprocess for variant calling and building concencus..."
+echo "Starting to preprocess for variant calling and building consensus..."
 echo " "
 sleep 1
 LIST3=`ls $SORTEDDIR/*.bam`
