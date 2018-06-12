@@ -1,3 +1,5 @@
+WD=`pwd`
+
 REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/Dmel_mtDNA_ref_v6.fasta
 
 DATASOURCE=Data

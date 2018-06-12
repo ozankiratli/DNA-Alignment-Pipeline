@@ -8,3 +8,6 @@ sudo rm -r SAM
 sudo rm -r sorted
 sudo rm -r trimmed
 sudo rm -r unpaired
+sudo rm -r VCF
+sudo rm -r vcready
+sudo rm -r tmp

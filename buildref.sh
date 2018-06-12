@@ -5,8 +5,6 @@ source PROGRAMPATHS
 
 R1=$1
 
-WD=`pwd`
-
 REFDIR=$WD/Reference
 REFERENCE=$R1
 REF=`echo $R1 | sed 's/\./ /g'  | awk '{print $1}' | sed 's/\// /g' | awk '{print $NF}'`
@@ -28,7 +26,7 @@ sleep 1
 echo " "
 echo "Creating picard reference dictionary..."
 sleep 1
-$JAVA -jar $PICARD CreateSequenceDictionary REFERENCE=$REFERENCE OUTPUT=$REFDICT
+$PICARD CreateSequenceDictionary REFERENCE=$REFERENCE OUTPUT=$REFDICT
 echo " "
 echo "Done!"
 sleep 1

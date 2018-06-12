@@ -10,7 +10,7 @@
 # 9. fastqc
 ########################
 
-PICARD=/usr/local/bin/picard.jar
+PICARDP=/usr/local/bin/picard.jar
 SAMTOOLS=/usr/bin/samtools
 BAMTOOLS=/usr/bin/bamtools
 VCFUTILS=/usr/bin/vcfutils.pl
@@ -19,3 +19,4 @@ SEQTK=/usr/bin/seqtk
 BWA=/usr/bin/bwa
 TRIMGALORE=/usr/local/bin/trim_galore
 JAVA=/usr/bin/java
+PICARD="java -jar $PICARDP"

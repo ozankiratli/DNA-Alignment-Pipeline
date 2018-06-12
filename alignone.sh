@@ -7,8 +7,6 @@ R1=$1
 I1=$2
 I2=$3
 
-WD=`pwd`
-
 REFDIR=$WD/Reference
 SAMDIR=$WD/SAM
 BAMDIR=$WD/BAM
@@ -26,7 +24,6 @@ BAM=$BAMDIR/$OUTPUT.bam
 SORTED=$SORTEDDIR/$OUTPUT"_sorted.bam"
 REPORT=$REPORTSDIR/$OUTPUT"_alignment_report.txt"
 ID=`echo $I1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
-
 
 $BWA mem $BWAOPTIONS $REFERENCE $INPUT1 $INPUT2 > $SAM
 $SAMTOOLS view -bS $SAM -o $BAM

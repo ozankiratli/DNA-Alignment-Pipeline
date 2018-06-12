@@ -3,19 +3,18 @@ echo "Starting script..."
 sleep 2
 echo " "
 
-WD=`pwd`
+source PARAMETERS
+source PROGRAMPATHS
+
 TRIMDIR=$WD/trimmed
 REFDIR=$WD/Reference
 DATADIR=$WD/Data
 SORTEDDIR=$WD/sorted
-
-source PARAMETERS
-source PROGRAMPATHS
-
-R1=$REFERENCEFILE
+VCREADYDIR=$WD/vcready
 
 echo "Checking REFERENCE file..."
 sleep 1
+R1=$REFERENCEFILE
 Test1=`ls $R1`
 if [ ! -f $Test1 ] ; then
 	echo "Reference file not found! Check PARAMETERS file"
@@ -61,6 +60,9 @@ mkdir -p Consensus
 mkdir -p Consensus/FASTQ
 mkdir -p Consensus/FASTA
 mkdir -p sorted
+mkdir -p vcready
+mkdir -p VCF
+mkdir -p tmp
 mkdir -p reports/fastqc
 mkdir -p reports/trim
 mkdir -p reports/alignment
@@ -68,6 +70,7 @@ echo "Folders created!"
 sleep 1
 echo " "
 echo " "
+
 echo "Building Reference..."
 cp $R1 $REFDIR/
 REF=`echo $R1 | sed 's/\// /g' | awk '{print $NF}'`
@@ -79,8 +82,8 @@ wait
 echo " "
 echo "Reference building script completed!"
 sleep 1
-
 echo " "
+
 echo "Starting trimming..."
 sleep 1
 LIST1=`ls $DATADIR/*_R1_*`
@@ -89,19 +92,16 @@ for f1 in $LIST1 ; do
 	ID=`echo $f1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
 	RAW1=$f1
 	RAW2=`echo $f1 | sed 's/\_R1_/_R2_/g'`
-	echo "Running: ./trimone.sh $RAW1 $RAW2 > reports/trim/TrimReport_$ID.txt"
-	sleep 1
 	./trimone.sh $RAW1 $RAW2 > reports/trim/TrimReport_$ID.txt
 	wait
-	echo "Trimming $RAW1 and $RAW2 is done!"
 	echo " "
-	sleep 1
 done
 wait
 echo "Trimming process is done!"
 echo " "
 echo " "
 sleep 1
+
 echo "Starting aligning..."
 sleep 1
 LIST2=`ls $TRIMDIR/*_R1_*`
@@ -110,10 +110,8 @@ for f2 in $LIST2 ; do
 	ID=`echo $f2 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
 	SEARCHSTR=$TRIMDIR/$ID"*_R2_*"
 	INPUT2=`ls $SEARCHSTR`
-	echo "Running: ./alignone.sh $REFERENCE $INPUT1 $INPUT2"
 	./alignone.sh $REFERENCE $INPUT1 $INPUT2
 	wait
-	sleep 1
 	echo " "
 	echo " "
 done
@@ -123,17 +121,15 @@ echo " "
 echo " "
 sleep 1
 
-echo "Starting to build consensus sequences..."
+echo "Starting to build consensus sequences and preprocess for variant calling..."
 echo " "
 sleep 1
 LIST3=`ls $SORTEDDIR/*.bam`
 for f3 in $LIST3 ; do
 	INPUT=$f3
-	echo $INPUT
-	echo "Running: ./consensusone.sh $REFERENCE $INPUT"
 	./consensusone.sh $REFERENCE $INPUT
+	./vcprep.sh $INPUT
 	wait
-	sleep 1
 	echo " "
 done
 wait
@@ -141,3 +137,11 @@ echo " "
 echo "End of generating consensus sequences!"
 echo " "
 sleep 1
+
+echo "Starting VariantCalling..."
+echo " "
+LIST4=`ls $VCREADYDIR/*.bam`
+sleep 1
+./vcfcaller.sh $REFERENCE $LIST4
+echo " "
+echo "Done!"
