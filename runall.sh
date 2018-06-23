@@ -159,4 +159,6 @@ sleep 1
 echo " "
 echo "Done!"
 echo " "
+echo "Cleaning files produced in the middle and Creating Output directory..."
+./clean.sh
 echo "End of script!"

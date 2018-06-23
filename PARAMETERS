@@ -5,7 +5,7 @@ REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/Dmel_mtDNA_ref_v6.fasta
 DATASOURCE=Data
 
 TRIMQUALITY=25
-CLIPFROM5=20
+CLIPFROM5=55
 CLIPFROM3=10
 TRIMGALOREOPTIONS="--fastqc --nextera --clip_R1 $CLIPFROM5 --clip_R2 $CLIPFROM5 --three_prime_clip_R1 $CLIPFROM3 --three_prime_clip_R2 $CLIPFROM3 --paired -q $TRIMQUALITY --retain_unpaired"
 
@@ -13,4 +13,5 @@ THREADS=2
 BWAMINSCOREOUTPUT=30
 BWAOPTIONS="-t $THREADS -T $BWAMINSCOREOUTPUT "
 
-VARCALLOPTIONS="-Ov --threads $THREADS -v -m "
+MINCOV=10
+VARCALLOPTIONS="-Ov --threads $THREADS -m -v "
