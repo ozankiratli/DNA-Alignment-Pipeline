@@ -12,8 +12,8 @@ VCFFILE=$VCFDIR/output.vcf
 
 echo "Creating VCF file..."
 echo " "
-$SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call $VARCALLOPTIONS -o $VCFFILE
-#/usr/local/bin/freebayes/bin/freebayes -f ~/data/Dmel_mtDNA_ref_v6.fasta -k --pooled-discrete -m 30 --min-alternate-fraction 0.75 --min-alternate-count 2 *.bam >output.vcf
+#$SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call $VARCALLOPTIONS -o $VCFFILE
+$FREEBAYES -f $REF $FREEBAYESOPTIONS $IN/*.bam > $VCFFILE
 echo "Done!"
 sleep 1
 echo " "

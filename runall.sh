@@ -2,6 +2,19 @@
 echo "Starting script..."
 sleep 2
 echo " "
+echo "Checking whether the required programs installed..."
+sleep 2
+echo " "
+./checkinstalled.sh
+sleep 2
+echo " "
+CHECKPT1=`grep "not" checkinstalled.tmp`
+if [ ! -z "$CHECKPT1" ]
+then
+	echo "Please install the missing programs or correct their paths in PROGRAMPATHS file"
+	exit 1
+fi
+rm -f checkinstalled.tmp
 
 source PARAMETERS
 source PROGRAMPATHS
@@ -155,7 +168,7 @@ sleep 1
 echo "Starting VariantCalling..."
 echo " "
 sleep 1
-./vcfcaller.sh $REFERENCE $LIST4
+./vcfcaller.sh $REFERENCE $VCFREADYDIR
 echo " "
 echo "Done!"
 echo " "
