@@ -12,6 +12,8 @@ then
 else
 	echo "java is installed" >> checkinstalled.tmp
 fi
+rm -f 1
+
 
 PICNP=`ls $PICARDP`
 if [ -z "$PICNP" ]
