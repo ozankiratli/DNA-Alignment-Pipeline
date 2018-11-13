@@ -5,7 +5,7 @@ source PROGRAMPATHS
 rm -f checkinstalled.tmp
 touch checkinstalled.tmp
 
-JAVP=`$JAVA -version`
+JAVP=`$JAVA --version`
 if [ -z "$JAVP" ]
 then
 	echo "java is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
