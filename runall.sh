@@ -12,6 +12,7 @@ CHECKPT1=`grep "not" checkinstalled.tmp`
 if [ ! -z "$CHECKPT1" ]
 then
 	echo "Please install the missing programs or correct their paths in PROGRAMPATHS file"
+	rm -f checkinstalled.tmp
 	exit 1
 fi
 rm -f checkinstalled.tmp

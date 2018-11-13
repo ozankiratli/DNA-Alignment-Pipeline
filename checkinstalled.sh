@@ -4,7 +4,7 @@ source PROGRAMPATHS
 
 touch checkinstalled.tmp
 
-JAVP=`$JAVA --version`
+JAVP=`$JAVA -version`
 if [ -z "$JAVP" ]
 then
 	echo "java is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
