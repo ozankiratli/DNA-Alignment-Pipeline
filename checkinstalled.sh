@@ -2,6 +2,7 @@
 
 source PROGRAMPATHS
 
+rm -f checkinstalled.tmp
 touch checkinstalled.tmp
 
 JAVP=`$JAVA -version`
