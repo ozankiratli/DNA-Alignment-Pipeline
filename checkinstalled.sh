@@ -5,6 +5,7 @@ source PROGRAMPATHS
 rm -f checkinstalled.tmp
 touch checkinstalled.tmp
 
+
 JAVP=`$JAVA -version 2>&1`
 if [ -z "$JAVP" ]
 then
@@ -23,6 +24,7 @@ else
 	echo "picard.jar is installed" >> checkinstalled.tmp
 fi
 
+
 SAMP=`$SAMTOOLS --version`
 if [ -z "$SAMP" ]
 then
@@ -30,6 +32,7 @@ then
 else
 	echo "samtools is installed" >> checkinstalled.tmp
 fi
+
 
 BAMP=`$BAMTOOLS --version`
 if [ -z "$BAMP" ]
@@ -39,6 +42,7 @@ else
 	echo "bamtools is installed" >> checkinstalled.tmp
 fi
 
+
 VUTP=`ls $VCFUTILS`
 if [ -z "$VUTP" ]
 then
@@ -46,6 +50,7 @@ then
 else
 	echo "vcfutils.pl is installed" >> checkinstalled.tmp
 fi
+
 
 BCFP=`$BCFTOOLS -v`
 if [ -z "$BCFP" ]
@@ -55,6 +60,7 @@ else
 	echo "bcftools is installed" >> checkinstalled.tmp
 fi
 
+
 SQTP=`$SEQTK 2>&1 | grep "Version"`
 if [ -z "$SQTP" ]
 then
@@ -62,6 +68,7 @@ then
 else
 	echo "seqtk is installed" >> checkinstalled.tmp
 fi
+
 
 BWAP=`$BWA 2>&1 | grep "Version"`
 if [ -z "$BWAP" ]
@@ -79,6 +86,7 @@ else
 	echo "trim_galore is installed" >> checkinstalled.tmp
 fi
 
+
 FBYP=`$FREEBAYES --version`
 if [ -z "$FBYP" ]
 then
@@ -87,19 +95,34 @@ else
 	echo "freebayes is installed" >> checkinstalled.tmp
 fi
 
+
+CTAP=`$CUTADAPT --version`
+if [ -z "$CTAP" ]
+then
+	echo "cutadapt is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+else
+	echo "cutadapt is installed" >> checkinstalled.tmp
+fi
+
+
+FASTQCPATH=`echo $FASTQC | sed 's_/fastqc__g'`
+CHECKFQCPATH=`echo $PATH | grep $FASTQCPATH`
+if [ -z "$CHECKFQCPATH" ]
+then
+	PATH=$PATH:$FASTQCPATH
+	export PATH=$PATH
+	echo "FastQC path is added to the path"
+	echo "New Path is:"
+	echo $PATH
+fi
+
+
 FQCP=`fastqc --version`
 if [ ! -z "$FQCP" ]
 then
 	echo "fastqc is installed" >> checkinstalled.tmp
 else
-	FASTQCPATH=`echo $FASTQC | sed 's/fastqc/ /g'` 
-	PATH=$PATH:$FASTQCPATH
-	export PATH
-	FQCP=`$FASTQC --version`
-	if [ -z "$FQCP" ]
-	then
-		echo "fastqc is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
-	fi
+	echo "fastqc is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
 fi
 
 cat checkinstalled.tmp

@@ -18,9 +18,13 @@ $ cp /path/to/data/* Data/
 
 --
 
-Run the scripts:
+Put the path to reference into PARAMETERS file and check the parameters
 
-$ ./runall.sh /path/to/reference
+--
+
+Run the scripts with:
+
+$ ./runall.sh 
 
 --
 

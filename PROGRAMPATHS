@@ -9,6 +9,7 @@
 #  8. cutadapt
 #  9. fastqc
 # 10. freebayes
+# 11. java
 ########################
 
 PICARDP=/usr/local/bin/picard.jar
@@ -23,3 +24,4 @@ JAVA=/usr/bin/java
 PICARD="java -jar $PICARDP"
 FASTQC=/usr/bin/fastqc
 FREEBAYES=/usr/bin/freebayes
+CUTADAPT=/usr/bin/cutadapt

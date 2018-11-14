@@ -1,13 +1,13 @@
 #!/bin/bash
 
-sudo rm -r BAM
-sudo rm -r Consensus
-sudo rm -r Reference
-sudo rm -r reports
-sudo rm -r SAM
-sudo rm -r sorted
-sudo rm -r trimmed
-sudo rm -r unpaired
-sudo rm -r VCF
-sudo rm -r vcready
-sudo rm -r tmp
+rm -r BAM
+rm -r Consensus
+rm -r Reference
+rm -r reports
+rm -r SAM
+rm -r sorted
+rm -r trimmed
+rm -r unpaired
+rm -r VCF
+rm -r vcready
+rm -r tmp

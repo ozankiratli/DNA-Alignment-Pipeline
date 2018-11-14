@@ -5,7 +5,7 @@ echo " "
 echo "Checking whether the required programs installed..."
 sleep 2
 echo " "
-./checkinstalled.sh
+source ./checkinstalled.sh
 sleep 2
 echo " "
 CHECKPT1=`grep "not" checkinstalled.tmp`
@@ -30,7 +30,7 @@ echo "Checking REFERENCE file..."
 sleep 1
 R1=$REFERENCEFILE
 Test1=`ls $R1`
-if [ ! -f $Test1 ] ; then
+if [ -z "$Test1" ] ; then
 	echo "Reference file not found! Check PARAMETERS file"
 	exit 1
 else
@@ -169,7 +169,7 @@ sleep 1
 echo "Starting VariantCalling..."
 echo " "
 sleep 1
-./vcfcaller.sh $REFERENCE $VCFREADYDIR
+./vcfcaller.sh $REFERENCE $VCREADYDIR
 echo " "
 echo "Done!"
 echo " "
