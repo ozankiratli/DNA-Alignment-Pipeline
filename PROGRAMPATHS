@@ -10,7 +10,13 @@
 #  9. fastqc
 # 10. freebayes
 # 11. java
+# 12. vcftools
 ########################
+
+########################\
+#
+# vcftools will be added
+
 
 PICARDP=/usr/local/bin/picard.jar
 SAMTOOLS=/usr/bin/samtools
