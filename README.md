@@ -18,11 +18,13 @@ $ cp /path/to/data/* Data/
 
 --
 
-Put the path to reference into PARAMETERS file and check the parameters
+- Put the path to reference into PARAMETERS file and check the parameters
+- Carefully change the PARAMETERS, DIRECTORIES, and PROGRAMPATHS.
+
 
 --
 
-Run the scripts with:
+Run the scripts with
 
 $ ./runall.sh 
 

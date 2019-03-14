@@ -10,12 +10,11 @@
 #  9. fastqc
 # 10. freebayes
 # 11. java
-# 12. vcftools
+# 12. parallel
+# 13. vcftools
 ########################
 
-########################\
-#
-# vcftools will be added
+########################
 
 
 PICARDP=/usr/local/bin/picard.jar
@@ -31,3 +30,5 @@ PICARD="java -jar $PICARDP"
 FASTQC=/usr/bin/fastqc
 FREEBAYES=/usr/bin/freebayes
 CUTADAPT=/usr/bin/cutadapt
+PARALLEL=/usr/bin/parallel
+#VCFTOOLS=/usr/bin/vcftools #not used at this time

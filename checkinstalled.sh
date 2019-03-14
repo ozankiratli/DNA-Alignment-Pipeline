@@ -1,17 +1,20 @@
 #!/bin/bash
 
 source PROGRAMPATHS
+source DIRECTORIES
+source PARAMETERS
 
-rm -f checkinstalled.tmp
-touch checkinstalled.tmp
+tmpfile="$WD/checkinstalled.tmp"
 
+rm -f $tmpfile
+touch $tmpfile
 
 JAVP=`$JAVA -version 2>&1`
 if [ -z "$JAVP" ]
 then
-	echo "java is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "java is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "java is installed" >> checkinstalled.tmp
+	echo "java is installed" >> $tmpfile
 fi
 rm -f 1
 
@@ -19,89 +22,89 @@ rm -f 1
 PICNP=`ls $PICARDP`
 if [ -z "$PICNP" ]
 then
-	echo "picard.jar is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "picard.jar is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "picard.jar is installed" >> checkinstalled.tmp
+	echo "picard.jar is installed" >> $tmpfile
 fi
 
 
 SAMP=`$SAMTOOLS --version`
 if [ -z "$SAMP" ]
 then
-	echo "samtools is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "samtools is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "samtools is installed" >> checkinstalled.tmp
+	echo "samtools is installed" >> $tmpfile
 fi
 
 
 BAMP=`$BAMTOOLS --version`
 if [ -z "$BAMP" ]
 then
-	echo "bamtools is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "bamtools is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "bamtools is installed" >> checkinstalled.tmp
+	echo "bamtools is installed" >> $tmpfile
 fi
 
 
 VUTP=`ls $VCFUTILS`
 if [ -z "$VUTP" ]
 then
-	echo "vcfutils.pl is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "vcfutils.pl is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "vcfutils.pl is installed" >> checkinstalled.tmp
+	echo "vcfutils.pl is installed" >> $tmpfile
 fi
 
 
 BCFP=`$BCFTOOLS -v`
 if [ -z "$BCFP" ]
 then
-	echo "bcfools is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "bcfools is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "bcftools is installed" >> checkinstalled.tmp
+	echo "bcftools is installed" >> $tmpfile
 fi
 
 
 SQTP=`$SEQTK 2>&1 | grep "Version"`
 if [ -z "$SQTP" ]
 then
-	echo "seqtk is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "seqtk is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "seqtk is installed" >> checkinstalled.tmp
+	echo "seqtk is installed" >> $tmpfile
 fi
 
 
 BWAP=`$BWA 2>&1 | grep "Version"`
 if [ -z "$BWAP" ]
 then
-	echo "bwa is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "bwa is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "bwa is installed" >> checkinstalled.tmp
+	echo "bwa is installed" >> $tmpfile
 fi
 
 TGLP=`$TRIMGALORE --version`
 if [ -z "$TGLP" ]
 then
-	echo "trim_galore is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "trim_galore is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "trim_galore is installed" >> checkinstalled.tmp
+	echo "trim_galore is installed" >> $tmpfile
 fi
 
 
 FBYP=`$FREEBAYES --version`
 if [ -z "$FBYP" ]
 then
-	echo "freebayes is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "freebayes is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "freebayes is installed" >> checkinstalled.tmp
+	echo "freebayes is installed" >> $tmpfile
 fi
 
 
 CTAP=`$CUTADAPT --version`
 if [ -z "$CTAP" ]
 then
-	echo "cutadapt is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "cutadapt is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 else
-	echo "cutadapt is installed" >> checkinstalled.tmp
+	echo "cutadapt is installed" >> $tmpfile
 fi
 
 
@@ -120,9 +123,9 @@ fi
 FQCP=`fastqc --version`
 if [ ! -z "$FQCP" ]
 then
-	echo "fastqc is installed" >> checkinstalled.tmp
+	echo "fastqc is installed" >> $tmpfile
 else
-	echo "fastqc is not installed or wrong path in PROGRAMPATHS file." >> checkinstalled.tmp
+	echo "fastqc is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 fi
 
-cat checkinstalled.tmp
+cat $tmpfile

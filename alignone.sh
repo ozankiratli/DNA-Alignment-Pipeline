@@ -2,28 +2,33 @@
 
 source PROGRAMPATHS
 source PARAMETERS
+source DIRECTORIES
 
 R1=$1
-I1=$2
-I2=$3
+DIR=$2
+I1=$3
+I2=$4
 
-REFDIR=$WD/Reference
-SAMDIR=$WD/SAM
-BAMDIR=$WD/BAM
-SORTEDDIR=$WD/sorted
-REPORTSDIR=$WD/reports/alignment
+TSAMDIR=$SAMDIR/$DIR
+TBAMDIR=$BAMDIR/$DIR
+TSORTEDDIR=$SORTEDDIR/$DIR
+TREPORTSDIR=$REPORTSDIR/alignment/$DIR
+
+mkdir -p $TSAMDIR
+mkdir -p $TBAMDIR
+mkdir -p $TSORTEDDIR
+mkdir -p $TREPORTSDIR
 
 REFERENCE=$R1
 INPUT1=$I1
 INPUT2=$I2
 
-OUTPUT=`echo $INPUT1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
-OUTPUT="out_$OUTPUT"
-SAM=$SAMDIR/$OUTPUT.sam
-BAM=$BAMDIR/$OUTPUT.bam
-SORTED=$SORTEDDIR/$OUTPUT"_sorted.bam"
-REPORT=$REPORTSDIR/$OUTPUT"_alignment_report.txt"
-ID=`echo $I1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_L001_/ /g' | awk '{print $1}'`
+OUTPUT=`echo $INPUT1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_R[0-9]_/ /g' | awk '{print $1}'`
+SAM=$TSAMDIR/$OUTPUT.sam
+BAM=$TBAMDIR/$OUTPUT.bam
+SORTED=$TSORTEDDIR/$OUTPUT"_sorted.bam"
+REPORT=$TREPORTSDIR/$OUTPUT"_alignment_report.txt"
+ID=`echo $I1 | sed 's/\// /g' | awk '{print $NF}' | sed 's/\_R[0-9]_/ /g' | awk '{print $1}'`
 
 $BWA mem $BWAOPTIONS $REFERENCE $INPUT1 $INPUT2 > $SAM
 $SAMTOOLS view -bS $SAM -o $BAM

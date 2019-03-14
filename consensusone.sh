@@ -2,12 +2,10 @@
 
 source PARAMETERS
 source PROGRAMPATHS
+source DIRECTORIES
 
 REF=$1
 IN=$2
-
-FQDIR=$WD/Consensus/FASTQ
-FADIR=$WD/Consensus/FASTA
 
 ID=`echo $IN | sed 's/\_sorted/ /g' | awk '{print $1}' | sed 's/\// /g' | awk '{print $NF}'`
 FQFILE=$FQDIR/$ID"_cns.fq"
@@ -22,4 +20,4 @@ echo "Converting fastq to fasta file..."
 $SEQTK seq -A $FQFILE > $FAFILE
 echo "Done!"
 echo " "
-sleep 1
+
