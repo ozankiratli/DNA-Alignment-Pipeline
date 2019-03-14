@@ -14,8 +14,8 @@ if [ $CT -eq 5 ] ; then
 	echo "Index files exist! No need to create the index again!"
 else
 	$BWA index -a bwtsw $REFERENCE
-	sleep 1
 fi
+wait
 echo "Done!"
 echo " "
 echo "Creating samtools fai index..."
@@ -24,8 +24,8 @@ if [ $CT -eq 1 ] ; then
 	echo "Index file exists! No need to create the index again!"
 else
 	$SAMTOOLS faidx $REFERENCE
-	sleep 1
 fi
+wait
 echo "Done!"
 echo " "
 echo "Creating picard reference dictionary..."
@@ -34,7 +34,6 @@ if [ $CT -eq 1 ] ; then
 	echo "Index file exists! No need to create the index again!"
 else
 	$PICARD CreateSequenceDictionary REFERENCE=$REFERENCE OUTPUT=$REFDICT
-	sleep 1
 fi
+wait
 echo "Done!"
-sleep 1

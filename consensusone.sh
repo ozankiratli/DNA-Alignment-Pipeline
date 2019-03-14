@@ -12,12 +12,13 @@ FQFILE=$FQDIR/$ID"_cns.fq"
 FAFILE=$FADIR/$ID"_cns.fasta"
 
 echo "Creating fastq consensus file..."
-echo " "
 $SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call -c --ploidy $PLOIDY | $VCFUTILS vcf2fq > $FQFILE
+wait
 echo "Done!"
 echo " "
 echo "Converting fastq to fasta file..."
 $SEQTK seq -A $FQFILE > $FAFILE
+wait
 echo "Done!"
-echo " "
+echo " " 
 

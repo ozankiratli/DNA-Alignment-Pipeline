@@ -17,7 +17,7 @@ else
 	echo "java is installed" >> $tmpfile
 fi
 rm -f 1
-
+wait
 
 PICNP=`ls $PICARDP`
 if [ -z "$PICNP" ]
@@ -26,7 +26,7 @@ then
 else
 	echo "picard.jar is installed" >> $tmpfile
 fi
-
+wait
 
 SAMP=`$SAMTOOLS --version`
 if [ -z "$SAMP" ]
@@ -35,7 +35,7 @@ then
 else
 	echo "samtools is installed" >> $tmpfile
 fi
-
+wait
 
 BAMP=`$BAMTOOLS --version`
 if [ -z "$BAMP" ]
@@ -44,7 +44,7 @@ then
 else
 	echo "bamtools is installed" >> $tmpfile
 fi
-
+wait
 
 VUTP=`ls $VCFUTILS`
 if [ -z "$VUTP" ]
@@ -53,7 +53,7 @@ then
 else
 	echo "vcfutils.pl is installed" >> $tmpfile
 fi
-
+wait
 
 BCFP=`$BCFTOOLS -v`
 if [ -z "$BCFP" ]
@@ -62,7 +62,7 @@ then
 else
 	echo "bcftools is installed" >> $tmpfile
 fi
-
+wait
 
 SQTP=`$SEQTK 2>&1 | grep "Version"`
 if [ -z "$SQTP" ]
@@ -71,7 +71,7 @@ then
 else
 	echo "seqtk is installed" >> $tmpfile
 fi
-
+wait
 
 BWAP=`$BWA 2>&1 | grep "Version"`
 if [ -z "$BWAP" ]
@@ -80,6 +80,7 @@ then
 else
 	echo "bwa is installed" >> $tmpfile
 fi
+wait
 
 TGLP=`$TRIMGALORE --version`
 if [ -z "$TGLP" ]
@@ -88,7 +89,7 @@ then
 else
 	echo "trim_galore is installed" >> $tmpfile
 fi
-
+wait
 
 FBYP=`$FREEBAYES --version`
 if [ -z "$FBYP" ]
@@ -97,7 +98,7 @@ then
 else
 	echo "freebayes is installed" >> $tmpfile
 fi
-
+wait
 
 CTAP=`$CUTADAPT --version`
 if [ -z "$CTAP" ]
@@ -106,7 +107,7 @@ then
 else
 	echo "cutadapt is installed" >> $tmpfile
 fi
-
+wait
 
 FASTQCPATH=`echo $FASTQC | sed 's_/fastqc__g'`
 CHECKFQCPATH=`echo $PATH | grep $FASTQCPATH`
@@ -118,7 +119,7 @@ then
 	echo "New Path is:"
 	echo $PATH
 fi
-
+wait
 
 FQCP=`fastqc --version`
 if [ ! -z "$FQCP" ]
@@ -127,5 +128,7 @@ then
 else
 	echo "fastqc is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
 fi
+wait
 
 cat $tmpfile
+wait

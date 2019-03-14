@@ -5,14 +5,14 @@ source PROGRAMPATHS
 source DIRECTORIES
 
 REF=$1
+VCFFILEN=$VCFFILENAME".vcf"
 
-VCFFILE=$VCFDIR/output.vcf
+VCFFILE=$VCFDIR/$VCFFILEN
 
-echo "Creating VCF file..."
-echo " "
-
+echo "Creating VCF file: $VCFFILE ..."
 #$SAMTOOLS mpileup -uf $REF $IN | $BCFTOOLS call $VARCALLOPTIONS -o $VCFFILE
 $FREEBAYES -f $REF $FREEBAYESOPTIONS $VCREADYDIR/*.bam > $VCFFILE
+wait
 echo "Done!"
 echo " "
 

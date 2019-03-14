@@ -18,6 +18,7 @@ then
 else
 	rm -f $WD/checkinstalled.tmp
 fi
+wait
 
 echo "Checking REFERENCE file..."
 R1=$REFERENCEFILE
@@ -29,6 +30,7 @@ else
 	echo "Reference file is: $R1"
 fi
 echo " "
+wait
 
 echo "Checking DATA files..."
 if [ -d $DATASOURCE  ] ; then
@@ -38,6 +40,7 @@ else
 	echo "Data directory does not exist! Check PARAMETERS file"
 	exit 1
 fi
+wait
 
 if [[ $DATAIN -ef Data ]] ; then
 	echo "No need to copy. Data is already in: $DATADIR"
@@ -48,6 +51,7 @@ else
 	echo "Files are copied!"
 fi
 echo " "
+wait
 
 if [ $MERGE -eq 0 ] ; then
 	DATADIRS="Data"
@@ -56,11 +60,13 @@ elif [ $MERGE -eq 1 ] ; then
 else
 	echo "Please correct your paremeters file MERGE takes values either 0 or 1"
 fi
+wait
 
 echo "Creating folders..."
 $WD/makedirectories.sh
 echo "Folders created!"
 echo " "
+wait
 
 echo "Building Reference..."
 cp $R1 $REFDIR/
@@ -112,7 +118,9 @@ for file in $LIST ; do
 		TSTR=`ls $TDIR/$LABEL*.bam`
 		BAMSTR="$BAMSTR $TSTR"
 	done
+	wait
 	$WD/mergebams.sh $REFERENCE $BAMSTR 
+	wait
 done
 wait
 echo "Merging process is done!"
@@ -134,10 +142,12 @@ wait
 echo " "
 echo "End of Building Consensus files!"
 $WD/vcfcaller.sh $REFERENCE
+wait
 echo "Done!"
 echo " "
 echo "Copying results to $RESULTSDIR ..."
 $WD/copyresults.sh
+wait
 echo "Done!"
 echo " "
 echo "End of script!"

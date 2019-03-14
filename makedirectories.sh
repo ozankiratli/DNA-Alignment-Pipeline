@@ -20,4 +20,4 @@ mkdir -p $TRIMDIR
 mkdir -p $UNPAIREDDIR
 mkdir -p $VCREADYDIR
 mkdir -p $VCFDIR
-
+wait
