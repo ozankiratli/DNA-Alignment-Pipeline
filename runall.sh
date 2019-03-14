@@ -106,6 +106,7 @@ echo "Aligning process is done!"
 echo " "
 echo " "
 
+if [ $MERGE -eq 1 ] ; then
 echo "Starting merging..."
 DIRTMP=`echo $DATADIRS | awk '{print $1}'`
 DIRINDEX=$SORTEDDIR/$DIRTMP
@@ -126,9 +127,17 @@ wait
 echo "Merging process is done!"
 echo " "
 echo " "
+fi
 
 echo "Starting to preprocess for variant calling and building consensus..."
-INPUT=$MERGEDDIR"/*.bam"
+if [ $MERGE -eq 1 ] ; then 
+	INPUT=$MERGEDDIR"/*.bam"
+elif [ $MERGE -eq 0 ] ; then
+	INPUT=$SORTEDDIR"/*.bam"
+else
+	echo "Wrong MERGE value in PARAMETERS!"
+	exit 1
+fi
 $PARALLEL -j $THREADS $WD/vcprep.sh {} ::: $INPUT
 wait
 echo "End of Preprocessing!"
