@@ -1,0 +1,34 @@
+###THE LIST OF PROGRAMS NEEDED####
+#  1. samtools 
+#  2. bamtools
+#  3. picard.jar
+#  4. bcftools
+#  5. seqtk
+#  6. trim_galore
+#  7. bwa 
+#  8. cutadapt
+#  9. fastqc
+# 10. freebayes
+# 11. java
+# 12. parallel
+# 13. vcftools
+########################
+
+########################
+
+
+PICARDP=/usr/local/bin/picard.jar
+SAMTOOLS=/usr/bin/samtools
+BAMTOOLS=/usr/bin/bamtools
+VCFUTILS=/usr/bin/vcfutils.pl
+BCFTOOLS=/usr/bin/bcftools
+SEQTK=/usr/bin/seqtk
+BWA=/usr/bin/bwa
+TRIMGALORE=/usr/local/bin/trim_galore
+JAVA=/usr/bin/java
+PICARD="java -jar $PICARDP"
+FASTQC=/usr/bin/fastqc
+FREEBAYES=/usr/bin/freebayes
+CUTADAPT=/usr/bin/cutadapt
+PARALLEL=/usr/bin/parallel
+#VCFTOOLS=/usr/bin/vcftools #not used at this time
