@@ -6,7 +6,6 @@ mkdir -p $BAMDIR
 mkdir -p $CONSENSUSDIR
 mkdir -p $FADIR
 mkdir -p $FQDIR
-mkdir -p $MERGEDDIR
 mkdir -p $REPORTSDIR
 mkdir -p $REPORTSDIR/fastqc
 mkdir -p $REPORTSDIR/trim

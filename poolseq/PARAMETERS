@@ -1,8 +1,7 @@
 # GENERAL OPTIONS
 THREADS=3
 DATASOURCE=Data
-MERGE=1
-REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/Dmel_mtDNA_ref_v6.fasta
+REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/poolseq/Dmel_mtDNA_ref_v6.fasta
 
 
 # TRIMMING OPTIONS

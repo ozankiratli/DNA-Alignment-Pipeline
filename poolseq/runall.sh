@@ -53,14 +53,6 @@ fi
 echo " "
 wait
 
-if [ $MERGE -eq 0 ] ; then
-	DATADIRS="Data"
-elif [ $MERGE -eq 1 ] ; then
-	DATADIRS=`ls $DATADIR`
-else
-	echo "Please correct your paremeters file MERGE takes values either 0 or 1"
-fi
-wait
 
 echo "Creating folders..."
 $WD/makedirectories.sh
@@ -77,67 +69,39 @@ wait
 echo "Reference building is completed!"
 echo " "
 
+
+
 echo "Starting trimming..."
-for dir in $DATADIRS ; do
-	wait
-	$WD/trimall.sh $dir > $REPORTSDIR/trim/TrimReport_$dir.txt
-	wait
-done
+wait
+
+$WD/trimall.sh  > $REPORTSDIR/trim/TrimReport_$dir.txt
 wait
 echo "Trimming process is done!"
 echo " "
 echo " "
 
 echo "Starting aligning..."
-for dir in $DATADIRS ; do
-	TRIMMEDDIR=$TRIMDIR/$dir
-	LIST=`ls $TRIMMEDDIR`
-	for file in $LIST ; do
-		newfile=`echo $file | sed 's/_val_[0-9]//' `
-		mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
-	done
-	wait
-	FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
-	$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE $dir {} {=s/_R1_/_R2_/=} ::: $FILE
-	wait
+TRIMMEDDIR=$TRIMDIR
+
+LIST=`ls $TRIMMEDDIR`
+
+for file in $LIST ; do
+	newfile=`echo $file | sed 's/_val_[0-9]//' `
+	echo "$file $newfile"
+	mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
 done
+wait
+FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
+$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE {} {=s/_R1_/_R2_/=} ::: $FILE
 wait
 echo "Aligning process is done!"
 echo " "
 echo " "
 
-if [ $MERGE -eq 1 ] ; then
-echo "Starting merging..."
-DIRTMP=`echo $DATADIRS | awk '{print $1}'`
-DIRINDEX=$SORTEDDIR/$DIRTMP
-LIST=`ls $DIRINDEX/*.bam`
-for file in $LIST ; do
-	LABEL=`echo $file | sed 's/\// /g' | awk '{print $NF}' |  sed 's/_/ /g' | awk '{print $1}'`
-	BAMSTR=""
-	for dir in $DATADIRS ; do
-		TDIR=$SORTEDDIR/$dir
-		TSTR=`ls $TDIR/$LABEL*.bam`
-		BAMSTR="$BAMSTR $TSTR"
-	done
-	wait
-	$WD/mergebams.sh $REFERENCE $BAMSTR 
-	wait
-done
-wait
-echo "Merging process is done!"
-echo " "
-echo " "
-fi
 
 echo "Starting to preprocess for variant calling and building consensus..."
-if [ $MERGE -eq 1 ] ; then 
-	INPUT=$MERGEDDIR"/*.bam"
-elif [ $MERGE -eq 0 ] ; then
-	INPUT=$SORTEDDIR"/*.bam"
-else
-	echo "Wrong MERGE value in PARAMETERS!"
-	exit 1
-fi
+INPUT=$SORTEDDIR"/*.bam"
+
 $PARALLEL -j $THREADS $WD/vcprep.sh {} ::: $INPUT
 wait
 echo "End of Preprocessing!"
@@ -153,10 +117,10 @@ echo " "
 #$WD/vcfcaller.sh $REFERENCE
 #wait
 #echo "Done!"
-#echo " "
-#echo "Copying results to $RESULTSDIR ..."
-#$WD/copyresults.sh
-#wait
-#echo "Done!"
-#echo " "
+echo " "
+echo "Copying results to $RESULTSDIR ..."
+$WD/copyresults.sh
+wait
+echo "Done!"
+echo " "
 echo "End of script!"
