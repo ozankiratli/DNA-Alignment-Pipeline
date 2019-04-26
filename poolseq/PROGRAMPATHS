@@ -17,7 +17,7 @@
 ########################
 
 
-PICARDP=/usr/local/bin/picard.jar
+#PICARDJAR=/usr/local/bin/picard.jar
 SAMTOOLS=/usr/bin/samtools
 BAMTOOLS=/usr/bin/bamtools
 VCFUTILS=/usr/bin/vcfutils.pl
