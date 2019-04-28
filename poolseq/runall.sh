@@ -1,11 +1,19 @@
 #!/bin/bash
 
-source PARAMETERS
-source PROGRAMPATHS
-source DIRECTORIES
-
 echo "Starting script..."
 echo " "
+source PROGRAMPATHS
+source DIRECTORIES
+echo "Calculating the number of cores needed for different programs..."
+$WD/calculatecores.sh
+echo " "
+echo "CORES will be such that:"
+cat CORES
+echo " "
+echo " "
+source CORES
+source PARAMETERS
+
 echo "Checking whether the required programs installed..."
 source $WD/checkinstalled.sh
 echo " "
@@ -19,6 +27,8 @@ else
 	rm -f $WD/checkinstalled.tmp
 fi
 wait
+
+echo " "
 
 echo "Checking REFERENCE file..."
 R1=$REFERENCEFILE
@@ -70,11 +80,9 @@ echo "Reference building is completed!"
 echo " "
 
 
-
 echo "Starting trimming..."
 wait
-
-$WD/trimall.sh  > $REPORTSDIR/trim/TrimReport_$dir.txt
+$WD/trimall.sh # > $REPORTSDIR/trim/TrimReport$dir.txt
 wait
 echo "Trimming process is done!"
 echo " "
@@ -82,9 +90,7 @@ echo " "
 
 echo "Starting aligning..."
 TRIMMEDDIR=$TRIMDIR
-
 LIST=`ls $TRIMMEDDIR`
-
 for file in $LIST ; do
 	newfile=`echo $file | sed 's/_val_[0-9]//' `
 	echo "$file $newfile"
@@ -92,20 +98,19 @@ for file in $LIST ; do
 done
 wait
 FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
-$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE {} {=s/_R1_/_R2_/=} ::: $FILE
+$PARALLEL -j $BWAJOBS $WD/alignone.sh $REFERENCE {} {=s/_R1_/_R2_/=} ::: $FILE
 wait
 echo "Aligning process is done!"
 echo " "
 echo " "
 
 
-echo "Starting to preprocess for variant calling and building consensus..."
-INPUT=$SORTEDDIR"/*.bam"
-
-$PARALLEL -j $THREADS $WD/vcprep.sh {} ::: $INPUT
-wait
-echo "End of Preprocessing!"
-echo " "
+#echo "Starting to preprocess for variant calling and building consensus..."
+#INPUT=$SORTEDDIR"/*.bam"
+#$PARALLEL -j $JOBS $WD/vcprep.sh {} ::: $INPUT
+#wait
+#echo "End of Preprocessing!"
+#echo " "
 
 #echo "Starting to build consensus files..."
 #echo " "

@@ -3,6 +3,7 @@
 source PARAMETERS
 source PROGRAMPATHS
 source DIRECTORIES
+source CORES
 
 SOURCEDIR=$DATADIR
 FILE="*_R1_*.fastq.gz"
@@ -13,7 +14,7 @@ mkdir -p $UNPAIREDDIR
 mkdir -p $TRIMDIR
 wait
 
-$PARALLEL -j $THREADS $TRIMGALORE $TRIMGALOREOPTIONS {} {=s/_R1_/_R2_/=} ::: $SOURCEDIR/$FILE
+$PARALLEL -j $TRIMJOBS $TRIMGALORE $TRIMGALOREOPTIONS {} {=s/_R1_/_R2_/=} ::: $SOURCEDIR/$FILE
 wait
 mv *.zip $REPORTSDIR/fastqc
 mv *.html $REPORTSDIR/fastqc

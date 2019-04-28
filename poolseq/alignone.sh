@@ -3,6 +3,7 @@
 source PROGRAMPATHS
 source PARAMETERS
 source DIRECTORIES
+source CORES
 
 R1=$1
 I1=$2
