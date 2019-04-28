@@ -1,9 +1,9 @@
 source CORES
 
 # GENERAL OPTIONS
-THREADS=3
+THREADS=27
 DATASOURCE=Data
-REFERENCEFILE=/home/tholian/build/DNA-Alignment-Pipeline/poolseq/Dmel_R6_plus_ISO1_MT.fna
+REFERENCEFILE=/home/Data/poolseq/Dmel_R6_plus_ISO1_MT.fna
 
 
 # TRIMMING OPTIONS
