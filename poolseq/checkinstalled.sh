@@ -19,7 +19,7 @@ fi
 rm -f 1
 wait
 
-PICNP=`$PICARD`
+PICNP=`$PICARD ViewSam --version`
 if [ -z "$PICNP" ]
 then
 	echo "picard.jar is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
