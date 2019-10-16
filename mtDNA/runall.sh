@@ -54,7 +54,7 @@ echo " "
 wait
 
 if [ $MERGE -eq 0 ] ; then
-	DATADIRS="Data"
+	DATADIRS="$DATADIR"
 elif [ $MERGE -eq 1 ] ; then
 	DATADIRS=`ls $DATADIR`
 else
@@ -77,20 +77,17 @@ wait
 echo "Reference building is completed!"
 echo " "
 
-echo "Starting trimming..."
-for dir in $DATADIRS ; do
+if [ $MERGE -eq 0 ] ; then
+	echo "Starting trimming..."
 	wait
-	$WD/trimall.sh $dir > $REPORTSDIR/trim/TrimReport_$dir.txt
+	$WD/trimall.sh > $REPORTSDIR/trim/TrimReport.txt
 	wait
-done
-wait
-echo "Trimming process is done!"
-echo " "
-echo " "
+	echo "Trimming process is done!"
+	echo " "
+	echo " "
 
-echo "Starting aligning..."
-for dir in $DATADIRS ; do
-	TRIMMEDDIR=$TRIMDIR/$dir
+	echo "Starting aligning..."
+	TRIMMEDDIR=$TRIMDIR
 	LIST=`ls $TRIMMEDDIR`
 	for file in $LIST ; do
 		newfile=`echo $file | sed 's/_val_[0-9]//' `
@@ -98,55 +95,82 @@ for dir in $DATADIRS ; do
 	done
 	wait
 	FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
-	$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE $dir {} {=s/_R1_/_R2_/=} ::: $FILE
+	$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE {} {=s/_R1_/_R2_/=} ::: $FILE
 	wait
-done
-wait
-echo "Aligning process is done!"
-echo " "
-echo " "
+	echo "Aligning process is done!"
+	echo " "
+	echo " "
 
-if [ $MERGE -eq 1 ] ; then
-echo "Starting merging..."
-DIRTMP=`echo $DATADIRS | awk '{print $1}'`
-DIRINDEX=$SORTEDDIR/$DIRTMP
-LIST=`ls $DIRINDEX/*.bam`
-for file in $LIST ; do
-	LABEL=`echo $file | sed 's/\// /g' | awk '{print $NF}' |  sed 's/_/ /g' | awk '{print $1}'`
-	BAMSTR=""
+elif [ $MERGE -eq 1 ] ; then
+	echo "Starting trimming..."
 	for dir in $DATADIRS ; do
-		TDIR=$SORTEDDIR/$dir
-		TSTR=`ls $TDIR/$LABEL*.bam`
-		BAMSTR="$BAMSTR $TSTR"
+		wait
+		$WD/trimall.sh $dir > $REPORTSDIR/trim/TrimReport_$dir.txt
+		wait
 	done
 	wait
-	$WD/mergebams.sh $REFERENCE $BAMSTR 
+	echo "Trimming process is done!"
+	echo " "
+	echo " "
+
+	echo "Starting aligning..."
+	for dir in $DATADIRS ; do
+		TRIMMEDDIR=$TRIMDIR/$dir
+		LIST=`ls $TRIMMEDDIR`
+		for file in $LIST ; do
+			newfile=`echo $file | sed 's/_val_[0-9]//' `
+			mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
+		done
+		wait
+		FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
+		$PARALLEL -j $THREADS $WD/alignone.sh $REFERENCE $dir {} {=s/_R1_/_R2_/=} ::: $FILE
+		wait
+	done
 	wait
-done
-wait
-echo "Merging process is done!"
-echo " "
-echo " "
+	echo "Aligning process is done!"
+	echo " "
+	echo " "
+
+	echo "Starting merging..."
+	DIRTMP=`echo $DATADIRS | awk '{print $1}'`
+	DIRINDEX=$SORTEDDIR/$DIRTMP
+	LIST=`ls $DIRINDEX/*.bam`
+	for file in $LIST ; do
+		LABEL=`echo $file | sed 's/\// /g' | awk '{print $NF}' |  sed 's/_/ /g' | awk '{print $1}'`
+		BAMSTR=""
+		for dir in $DATADIRS ; do
+			TDIR=$SORTEDDIR/$dir
+			TSTR=`ls $TDIR/$LABEL*.bam`
+			BAMSTR="$BAMSTR $TSTR"
+		done
+		wait
+		$WD/mergebams.sh $REFERENCE $BAMSTR 
+		wait
+	done
+	wait
+	echo "Merging process is done!"
+	echo " "
+	echo " "
 fi
 
 echo "Starting to preprocess for variant calling and building consensus..."
 if [ $MERGE -eq 1 ] ; then 
-	INPUT=$MERGEDDIR"/*.bam"
+	INPUTVPREP=$MERGEDDIR"/*.bam"
 elif [ $MERGE -eq 0 ] ; then
-	INPUT=$SORTEDDIR"/*.bam"
+	INPUTVPREP=$SORTEDDIR"/*.bam"
 else
 	echo "Wrong MERGE value in PARAMETERS!"
 	exit 1
 fi
-$PARALLEL -j $THREADS $WD/vcprep.sh {} ::: $INPUT
+$PARALLEL -j $THREADS $WD/vcprep.sh {} ::: $INPUTVPREP
 wait
 echo "End of Preprocessing!"
 echo " "
 
 echo "Starting to build consensus files..."
 echo " "
-INPUT=$VCREADYDIR"/*.bam"
-$PARALLEL -j $THREADS $WD/consensusone.sh $REFERENCE {} ::: $INPUT
+INPUTCONS=$VCREADYDIR"/*.bam"
+$PARALLEL -j $THREADS $WD/consensusone.sh $REFERENCE {} ::: $INPUTCONS
 wait
 echo " "
 echo "End of Building Consensus files!"

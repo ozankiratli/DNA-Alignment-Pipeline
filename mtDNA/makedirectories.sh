@@ -1,12 +1,15 @@
 #!/bin/bash
 
 source DIRECTORIES
+source PARAMETERS
 
 mkdir -p $BAMDIR
 mkdir -p $CONSENSUSDIR
 mkdir -p $FADIR
 mkdir -p $FQDIR
-mkdir -p $MERGEDDIR
+if [ $MERGE -eq 1 ] ; then
+	mkdir -p $MERGEDDIR
+fi
 mkdir -p $REPORTSDIR
 mkdir -p $REPORTSDIR/fastqc
 mkdir -p $REPORTSDIR/trim
