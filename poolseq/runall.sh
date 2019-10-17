@@ -82,7 +82,7 @@ echo " "
 
 echo "Starting trimming..."
 wait
-$WD/trimall.sh # > $REPORTSDIR/trim/TrimReport$dir.txt
+$WD/trimall.sh  > $REPORTSDIR/trim/TrimReport.txt
 wait
 echo "Trimming process is done!"
 echo " "
@@ -105,23 +105,26 @@ echo " "
 echo " "
 
 
-#echo "Starting to preprocess for variant calling and building consensus..."
-#INPUT=$SORTEDDIR"/*.bam"
-#$PARALLEL -j $JOBS $WD/vcprep.sh {} ::: $INPUT
-#wait
-#echo "End of Preprocessing!"
-#echo " "
+echo "Starting to preprocess for variant calling and building consensus..."
+INPUT=$SORTEDDIR"/*.bam"
+$PARALLEL -j $JOBS $WD/vcprep.sh {} ::: $INPUT
+wait
+echo "End of Preprocessing!"
+echo " "
 
-#echo "Starting to build consensus files..."
-#echo " "
-#INPUT=$VCREADYDIR"/*.bam"
-#$PARALLEL -j $THREADS $WD/consensusone.sh $REFERENCE {} ::: $INPUT
-#wait
-#echo " "
-#echo "End of Building Consensus files!"
-#$WD/vcfcaller.sh $REFERENCE
-#wait
-#echo "Done!"
+echo "Starting to build consensus files..."
+echo " "
+INPUT=$VCREADYDIR"/*.bam"
+$PARALLEL -j $THREADS $WD/consensusone.sh $REFERENCE {} ::: $INPUT
+wait
+echo " "
+echo "End of Building Consensus files!"
+echo " "
+
+echo "Starting variant calling..."
+$WD/vcfcaller.sh $REFERENCE
+wait
+echo "Done!"
 echo " "
 echo "Copying results to $RESULTSDIR ..."
 $WD/copyresults.sh
