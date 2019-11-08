@@ -88,6 +88,8 @@ echo "Trimming process is done!"
 echo " "
 echo " "
 
+$WD/tempfiles.sh $UNPAIREDDIR
+
 echo "Starting aligning..."
 TRIMMEDDIR=$TRIMDIR
 LIST=`ls $TRIMMEDDIR`
