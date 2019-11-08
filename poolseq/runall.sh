@@ -94,7 +94,7 @@ LIST=`ls $TRIMMEDDIR`
 for file in $LIST ; do
 	newfile=`echo $file | sed 's/_val_[0-9]//' `
 	echo "$file $newfile"
-#	mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
+	mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
 done
 wait
 FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
