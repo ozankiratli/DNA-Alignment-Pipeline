@@ -13,27 +13,26 @@ SORTED=$TMPDIR/$ID"_sorted.bam"
 MARKDUP=$TMPDIR/$ID"_md.bam"
 VCREADY=$VCREADYDIR/$ID".bam"
 
-echo "Cleaning bam file"
+echo "Cleaning bam file: $ID"
 $PICARD CleanSam I=$IN O=$CLEAN
 wait
-echo "Done!"
-echo " "
-echo "Adding Groups"
+echo "Adding Groups: $ID"
 $PICARD AddOrReplaceReadGroups I=$CLEAN O=$RGTAG RGID=$ID $ADDGROUPOPTIONS1 RGSM=$ID $ADDGROUPOPTIONS2
 wait
-echo "Done!"
-echo " "
-echo "Sorting with Picard"
+rm $CLEAN
+wait
+echo "Sorting with Picard: $ID"
 $PICARD SortSam I=$RGTAG O=$SORTED $PICARDSORTOPTIONS 
 wait
-echo "Done!"
-echo " "
-echo "Marking Duplicates"
+rm $RGTAG
+wait
+echo "Marking Duplicates: $ID"
 $PICARD MarkDuplicates I=$SORTED O=$MARKDUP M=$TMPDIR/$ID.txt
 wait
-echo "Done!"
-echo " "
-echo "Fixing Mate Info"
+rm $SORTED
+wait
+echo "Fixing Mate Info: $ID"
 $PICARD FixMateInformation I=$MARKDUP O=$VCREADY $FIXMATEOPTIONS 
 wait
-echo "Done!"
+rm $MARKDUP
+wait

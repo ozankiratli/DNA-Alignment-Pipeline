@@ -1,16 +1,31 @@
 source CORES
 
 # GENERAL OPTIONS
-THREADS=27
+THREADS=18
 DATASOURCE=Data
-REFERENCEFILE=/home/Data/poolseq/Dmel_R6_plus_ISO1_MT.fna
+REFERENCEFILE=/home/ozank/Analysis/poolseq/dmel_v5-39_all.fasta
 
+
+# TEMPFILES takes the following options: 
+# "K" for Keep
+# "A" for Archive 
+# "D" for Deletion 
+TEMPFILES="A"
+ARCHIVEDIR=/home/tholian/build/Temp/Archive
+
+
+#ARCHIVEDIR=/home/Ext3-8TB/ozank/Migration2018/poolseq/Archive/
 
 # TRIMMING OPTIONS
 TRIMQUALITY=25
 ADAPTER1="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
 ADAPTER2="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
-TRIMGALOREOPTIONS="--fastqc --cores $TRIMCORES -a $ADAPTER1 -a2 $ADAPTER2 --paired -q $TRIMQUALITY --retain_unpaired"
+CLIP5_R1=10
+CLIP5_R2=10
+CLIP3_R1=10
+CLIP3_R2=10
+TRIMGALOREOPTIONS="--fastqc --cores $TRIMCORES -a $ADAPTER1 -a2 $ADAPTER2 --paired -q $TRIMQUALITY --retain_unpaired --clip_R1 $CLIP5_R1 --clip_R2 $CLIP5_R2 --three_prime_clip_R1 $CLIP3_R1 --three_prime_clip_R2 $CLIP3_R2 "
+
 
 # ALIGNING OPTIONS
 BWAMINSCOREOUTPUT=30

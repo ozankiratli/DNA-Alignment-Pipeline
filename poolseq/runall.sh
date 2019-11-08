@@ -94,7 +94,7 @@ LIST=`ls $TRIMMEDDIR`
 for file in $LIST ; do
 	newfile=`echo $file | sed 's/_val_[0-9]//' `
 	echo "$file $newfile"
-	mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
+#	mv $TRIMMEDDIR/$file $TRIMMEDDIR/$newfile 2>/dev/null
 done
 wait
 FILE=$TRIMMEDDIR"/*_R1_*.fq.gz"
@@ -104,6 +104,28 @@ echo "Aligning process is done!"
 echo " "
 echo " "
 
+$WD/tempfiles.sh $TRIMDIR
+
+echo "Converting files from SAM to BAM..."
+INPUT=$SAMDIR"/*.sam"
+$PARALLEL -j $JOBS $WD/samtobam.sh {} ::: $INPUT
+echo "Done!"
+echo " "
+echo " "
+
+$WD/tempfiles.sh $SAMDIR
+
+echo "Sorting and indexing BAM files..."
+INPUT=$BAMDIR"/*.bam"
+$PARALLEL -j $JOBS $WD/sortindex.sh {} ::: $INPUT
+echo "Done sorting and indexing!"
+
+echo "Generating alignment reports!"
+INPUT=$BAMDIR"/*.bam"
+$PARALLEL -j $JOBS $WD/reportalign.sh {} ::: $INPUT
+echo "Done generating reports"
+
+$WD/tempfiles.sh $BAMDIR
 
 echo "Starting to preprocess for variant calling and building consensus..."
 INPUT=$SORTEDDIR"/*.bam"
@@ -111,6 +133,8 @@ $PARALLEL -j $JOBS $WD/vcprep.sh {} ::: $INPUT
 wait
 echo "End of Preprocessing!"
 echo " "
+
+$WD/tempfiles.sh $SORTEDDIR
 
 echo "Starting to build consensus files..."
 echo " "
