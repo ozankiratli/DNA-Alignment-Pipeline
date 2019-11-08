@@ -89,6 +89,7 @@ echo " "
 echo " "
 
 $WD/tempfiles.sh $UNPAIREDDIR
+wait 
 
 echo "Starting aligning..."
 TRIMMEDDIR=$TRIMDIR
@@ -107,6 +108,7 @@ echo " "
 echo " "
 
 $WD/tempfiles.sh $TRIMDIR
+wait
 
 echo "Converting files from SAM to BAM..."
 INPUT=$SAMDIR"/*.sam"
@@ -116,6 +118,7 @@ echo " "
 echo " "
 
 $WD/tempfiles.sh $SAMDIR
+wait
 
 echo "Sorting and indexing BAM files..."
 INPUT=$BAMDIR"/*.bam"
@@ -128,6 +131,7 @@ $PARALLEL -j $JOBS $WD/reportalign.sh {} ::: $INPUT
 echo "Done generating reports"
 
 $WD/tempfiles.sh $BAMDIR
+wait
 
 echo "Starting to preprocess for variant calling and building consensus..."
 INPUT=$SORTEDDIR"/*.bam"
@@ -137,6 +141,7 @@ echo "End of Preprocessing!"
 echo " "
 
 $WD/tempfiles.sh $SORTEDDIR
+wait
 
 echo "Starting to build consensus files..."
 echo " "
