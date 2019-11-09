@@ -19,12 +19,16 @@ fi
 rm -f 1
 wait
 
-PICNP=`$PICARD ViewSam --version 2>&1`
-if [ -z "$PICNP" ]
-then
-	echo "picard-tools is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
+PICNP1=`$PICARD ViewSam --version 2>&1`
+if [ -z "$PICNP1" ] ; then
+        PICNP2=`ls $PICARDP`
+        if [ -z "$PICNP2" ] ; then
+                echo "picard is not installed or wrong path in PROGRAMPATHS file." >> $tmpfile
+        else
+                echo "picard.jar is installed" >> $tmpfile
+        fi
 else
-	echo "picard-tools is installed" >> $tmpfile
+        echo "picard-tools is installed" >> $tmpfile
 fi
 wait
 
