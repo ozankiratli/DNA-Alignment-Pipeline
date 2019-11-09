@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REFERENCE=$1
-INPUT1=$I2
-INPUT2=$I3
+INPUT1=$2
+INPUT2=$3
 
 source PROGRAMPATHS
 source PARAMETERS

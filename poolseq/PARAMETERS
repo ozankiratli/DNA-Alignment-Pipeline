@@ -11,10 +11,7 @@ REFERENCEFILE=/home/ozank/Analysis/poolseq/dmel_v5-39_all.fasta
 # "A" for Archive 
 # "D" for Deletion 
 TEMPFILES="A"
-ARCHIVEDIR=/home/tholian/build/Temp/Archive
-
-
-#ARCHIVEDIR=/home/Ext3-8TB/ozank/Migration2018/poolseq/Archive/
+ARCHIVEDIR=/home/Ext3-8TB/ozank/Migration2018/poolseq/Archive/
 
 # TRIMMING OPTIONS
 TRIMQUALITY=25
