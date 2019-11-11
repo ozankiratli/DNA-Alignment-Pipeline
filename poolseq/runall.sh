@@ -143,6 +143,9 @@ echo " "
 $WD/tempfiles.sh $SORTEDDIR
 wait
 
+$WD/tempfiles.sh $TMPDIR
+wait
+
 echo "Starting to build consensus files..."
 echo " "
 INPUT=$VCREADYDIR"/*.bam"

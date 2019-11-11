@@ -19,20 +19,12 @@ wait
 echo "Adding Groups: $ID"
 $PICARD AddOrReplaceReadGroups I=$CLEAN O=$RGTAG RGID=$ID $ADDGROUPOPTIONS1 RGSM=$ID $ADDGROUPOPTIONS2
 wait
-rm $CLEAN
-wait
 echo "Sorting with Picard: $ID"
 $PICARD SortSam I=$RGTAG O=$SORTED $PICARDSORTOPTIONS 
-wait
-rm $RGTAG
 wait
 echo "Marking Duplicates: $ID"
 $PICARD MarkDuplicates I=$SORTED O=$MARKDUP M=$TMPDIR/$ID.txt
 wait
-rm $SORTED
-wait
 echo "Fixing Mate Info: $ID"
 $PICARD FixMateInformation I=$MARKDUP O=$VCREADY $FIXMATEOPTIONS 
-wait
-rm $MARKDUP
 wait
